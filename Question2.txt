@@ -1,0 +1,72 @@
+import java.util.*;
+
+public class Buildingexposedtosunlight {
+	static class Building {
+		double x;
+		double y;
+
+		public Building(double e, double d) {
+			this.x = e;
+			this.y = d;
+		}
+	};
+
+	static float largest(ArrayList<Building> arrayList, int n) {
+		float max = Float.MIN_VALUE;
+		for (int i = 0; i < n; i++) {
+			if ((int) Math.abs(arrayList.get(i).y) > max) {
+				max = (int) Math.abs(arrayList.get(i).y);
+			}
+		}
+		return max;
+	}
+
+	static float minimum(ArrayList<Building> arrayList, int n) {
+		float min = Float.MAX_VALUE;
+		for (int i = 0; i < n; i++) {
+			if ((int) Math.abs(arrayList.get(i).x) < min) {
+				min = (int) Math.abs(arrayList.get(i).x);
+			}
+		}
+		return min;
+	}
+
+	public static void main(String[] args) {
+		ArrayList<ArrayList<Building>> a = new ArrayList<>();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter how many buldings");
+		int len = sc.nextInt();
+		float arr[] = new float[len];
+		for (int i = 0; i < len; i++) {
+			System.out.println("Enter the values of building" + (i + 1));
+			ArrayList<Building> c = new ArrayList<>();
+			for (int j = 0; j < 4; j++) {
+				System.out.println("Enter the value of x coordinate and y coordinate");
+				Building b = new Building(sc.nextDouble(), sc.nextDouble());
+				c.add(b);
+			}
+			a.add(c);
+			float height = largest(a.get(i), a.get(0).size());
+			arr[i] = height;
+		}
+		System.out.println("Enter the coordinated of source of Light");
+		Building b = new Building(sc.nextDouble(), sc.nextDouble());
+		if (arr.length == 1) {
+			float width = minimum(a.get(0), a.get(0).size());
+			float calc = (float) (width - b.x);
+			System.out.println(arr[0] + calc);
+		} else {
+			for (int i = 0; i < arr.length - 1; i++) {
+				if (arr[i] > arr[i + 1]) {
+					float width = minimum(a.get(i), a.get(i).size());
+					float calc = (float) (width - b.x);
+					System.out.println(arr[i] + calc);
+				} else {
+					float width = minimum(a.get(i + 1), a.get(i + 1).size());
+					float calc = (float) (width - b.x);
+					System.out.println(arr[i + 1] + calc);
+				}
+			}
+		}
+	}
+}
